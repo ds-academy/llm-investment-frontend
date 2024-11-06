@@ -147,11 +147,11 @@ class _LoginPageState extends State<LoginPage> {
                     width: MediaQuery.of(context).size.width,
                     child: TextButton(onPressed: (){
                       // 개발용 임시 코드
-                      Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => HomePage())
-                      );
+                      // Navigator.pushReplacement(context,
+                      //   MaterialPageRoute(builder: (context) => HomePage())
+                      // );
                       // 버튼 클릭 시 로그인, 홈페이지로 이동
-                      // _login();
+                      _login();
                     },  style: TextButton.styleFrom(
                       foregroundColor: Colors.white,
                       backgroundColor: Colors.blueAccent[700],

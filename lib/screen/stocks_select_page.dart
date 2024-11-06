@@ -4,7 +4,9 @@ import '../component/drawer_menu.dart';
 import '../component/navigator_back_button.dart';
 
 class StocksSelectPage extends StatefulWidget {
-  const StocksSelectPage({super.key, required String sectorColumValue});
+  const StocksSelectPage({super.key, required this.alias});
+
+  final List<String> alias; // 전달 받은 alias 데이터 저장
 
   @override
   State<StocksSelectPage> createState() => _StocksSelectPageState();
@@ -14,12 +16,11 @@ class _StocksSelectPageState extends State<StocksSelectPage> {
   // 메뉴바 scaffoldKey
   final navigatorObserver = MyNavigatorObserver().scaffoldKey;
 
-  // 주식 종목 목록
-  final List<Map<String, String>> stockContents = [
-    {'title': '삼성 SDI1', 'subtitle': 'Samsung SDI1'},
-    {'title': '삼성 SDI2', 'subtitle': 'Samsung SDI2'},
-    {'title': '삼성 SDI3', 'subtitle': 'Samsung SDI3'}
-  ];
+  // final List<Map<String, String>> stockContents = [
+  //   {'title': '삼성 SDI1', 'subtitle': 'Samsung SDI1'},
+  //   {'title': '삼성 SDI2', 'subtitle': 'Samsung SDI2'},
+  //   {'title': '삼성 SDI3', 'subtitle': 'Samsung SDI3'}
+  // ];
 
   // 주식명 순서에 따른 알파벳
   final List<String> stockLabels = ['A', 'B', 'C'];
@@ -93,7 +94,7 @@ class _StocksSelectPageState extends State<StocksSelectPage> {
                 padding: EdgeInsets.zero, // 전체 padding을 추가할 수 있습니다
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center, // 세로 가운데 정렬
-                  children: List.generate(stockContents.length, (index) {
+                  children: List.generate(widget.alias.length, (index) {
                       return Padding(
                         // 마지막 막대에는 하단 간격을 추가하지 않음
                         padding: EdgeInsets.only(bottom: index == 2 ? 0 : 30),
@@ -124,6 +125,7 @@ class _StocksSelectPageState extends State<StocksSelectPage> {
                                     )
                                   ]
                                 ),
+
                                 child: Row(
                                   children: [
                                     Flexible(
@@ -132,6 +134,7 @@ class _StocksSelectPageState extends State<StocksSelectPage> {
                                           color: Colors.blueAccent[400],
                                           child: Center(
                                             child: Text(
+                                              // 알파벳 라벨
                                               stockLabels[index],
                                               style: const TextStyle(
                                                 color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold
@@ -153,16 +156,12 @@ class _StocksSelectPageState extends State<StocksSelectPage> {
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
+                                            // company alias 텍스트
                                             Text(
-                                              "  ${stockContents[index]['title']!}", // 타이틀
+                                              "  ${widget.alias[index]}", // 타이틀
                                               style: TextStyle(
                                                   color: Colors.blueAccent[700], fontSize: 18, fontWeight: FontWeight.bold
                                               ),
-                                            ),
-                                            const SizedBox(height: 4), // 타이틀과 서브타이틀 사이 간격
-                                            Text(
-                                              "  ${stockContents[index]['subtitle']!}",
-                                              style: TextStyle(color: Colors.blueAccent[700], fontSize: 14),
                                             ),
                                           ],
                                         ),
