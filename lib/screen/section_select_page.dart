@@ -30,18 +30,25 @@ class _SectionSelectPageState extends State<SectionSelectPage> {
     {'imagePath': 'assets/sections/section_menu_3.png', 'sector': '게임엔터'},
     {'imagePath': 'assets/sections/section_menu_4.png', 'sector': '방송엔터'},
     {'imagePath': 'assets/sections/section_menu_5.png', 'sector': '항공사'},
-    {'imagePath': 'assets/sections/section_menu_6.png', 'sector': '건설사'},
+    {'imagePath': 'assets/sections/section_menu_6.png', 'sector': '건설'},
     {'imagePath': 'assets/sections/section_menu_7.png', 'sector': '전기제품'},
   ];
 
+  // aliasValues 초기화.
+  late List<String> aliasValues = [];
+
   // sector 텍스트 값 전송 객체
-  Future<void> onImageTap(BuildContext context, String sector) async {
-    final SelectSector _selectSector = SelectSector();
-    final sectorColumValue = await _selectSector.sendToSector(sector);
-    if (sectorColumValue != null) {
+  Future<void> _onImageTap(context, String sector) async {
+    final SelectSector selectSectors = SelectSector();
+    aliasValues = (await selectSectors.sendToSector(sector))!;
+    if (aliasValues.length == 3) {
       Navigator.push(context,
-          MaterialPageRoute(builder: (context) => StocksSelectPage(sectorColumValue: sectorColumValue))
+          MaterialPageRoute(
+            builder: (context) => StocksSelectPage(alias: aliasValues),
+          ),
       );
+    } else {
+      print("Send to alias txt Error");
     }
 
   }
@@ -137,7 +144,8 @@ class _SectionSelectPageState extends State<SectionSelectPage> {
                                   // 주식 선택 페이지로 이동 버튼 영역
                                   child: GestureDetector(
                                     onTap: (){
-                                      onImageTap(context, items['sector']!);
+                                      // alias 텍스트 값 전송과 함께 페이지 이동
+                                      _onImageTap(context, items['sector']!);
                                     },
                                     child: Container(
                                       width: 80,
