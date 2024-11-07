@@ -57,16 +57,20 @@ class _SectionSelectPageState extends State<SectionSelectPage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        backgroundColor: Colors.blueAccent,
         key: navigatorObserver,
         appBar: AppBar(
           backgroundColor: Colors.white,
-          foregroundColor: Colors.blue,
+          foregroundColor: Colors.blueAccent,
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                bottom: Radius.circular(20),
+              )
+          ),
           elevation: 15,
           leading: IconButton(
-            onPressed: () {
-              null;
-            },
-            icon: Image.asset('assets/chatbot_small.png'),
+            onPressed: () {null;},
+            icon: Image.asset('assets/antlab_logo_small.png'),
           ),
           actions: [
             Builder(
@@ -91,7 +95,7 @@ class _SectionSelectPageState extends State<SectionSelectPage> {
           child: Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
-            color: Colors.blueAccent,
+            color: Colors.transparent,
 
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

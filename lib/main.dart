@@ -22,7 +22,6 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(),
       home: FutureBuilder<bool>(
           future: _authService.isLoggedIn(), // 로그인 상태 확인
-
           builder: (context, snapshot) {
             // 로딩 상태일 때 로딩 페이지 표시
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -36,10 +35,9 @@ class MyApp extends StatelessWidget {
                 // 로그인된 경우 홈 페이지, 비로그인 상태인 경우 로그인 페이지
               }
               // 에러 처리 또는 기본 로그인 페이지 반환
-              return const LoginPage(); // 기본적으로 로그인 페이지로 이동
+              return const LoginPage();
             }
-          }
-      ),
+          }),
       navigatorObservers: [MyNavigatorObserver()],
     );
   }

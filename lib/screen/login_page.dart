@@ -5,8 +5,6 @@ import 'package:llm_invest_frontend/screen/home_page.dart';
 import 'package:llm_invest_frontend/screen/join_page.dart';
 import '../model/auth_service.dart';
 
-
-
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
   @override
@@ -40,13 +38,13 @@ class _LoginPageState extends State<LoginPage> {
 
   // 일반 로그인 객체
   Future<void> _login() async {
-    final AuthService _authService = AuthService(); // AuthService 인스턴스 생성
-    bool loginScuccess = await _authService.login(
+    final AuthService authService = AuthService(); // AuthService 인스턴스 생성
+    bool loginScuccess = await authService.login(
       _idController.text, _pwController.text, context,
     );
     if (loginScuccess) {
       Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(builder: (context) => const HomePage()),
       );
     } else {
       Fluttertoast.showToast(
@@ -81,15 +79,11 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-
-                  // 앱 이름 로고
-                  Text('개미의 꿈',
-                    style: TextStyle(
-                      color: Colors.blueAccent[700],
-                      fontSize: MediaQuery.of(context).size.width * 0.12,
-                      fontWeight: FontWeight.bold,),
+                  Image.asset(
+                    "assets/antlab_logo_big.png",
+                    width: MediaQuery.of(context).size.width * 0.7
                   ),
-                  SizedBox(height: 30,),
+                  SizedBox(height: 40,),
 
                   // 아이디 입력
                   SizedBox(
