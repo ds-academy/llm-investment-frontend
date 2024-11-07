@@ -16,8 +16,8 @@ class AuthService {
         url, data: {'id': id, 'pw': pw,});
 
       if (res.statusCode == 200 && res.data['success']) {
-        // 로그인 성공 시 로그인 상태 유지
-        await storage.write(key: 'idToken', value: res.data['idToken']);
+        // 로그인 성공 시 ID 값을 저장해 로그인 상태 유지
+        await storage.write(key: 'token', value: res.data['token']);
         return true;
       } else {
         print('Failed to login request: ${res.statusCode}');
@@ -32,7 +32,7 @@ class AuthService {
   // 로그인 상태 유지 여부 확인
   Future<bool> isLoggedIn() async {
     try {
-      String? idToken = await storage.read(key: 'idToken');
+      String? idToken = await storage.read(key: 'token');
       return idToken != null;
     } catch (error) {
       print("loggedIn Error: $error");
@@ -43,7 +43,7 @@ class AuthService {
   // 로그아웃 기능
   Future<void> logout(BuildContext context) async {
     try {
-      await storage.delete(key: 'idToken');
+      await storage.delete(key: 'token');
     } catch (error) {
       print("logout Error: $error");
     }
