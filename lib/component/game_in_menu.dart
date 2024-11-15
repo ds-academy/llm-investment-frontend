@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:llm_invest_frontend/screen/login_page.dart';
-import '../model/auth_service.dart';
+import '../screen/home_page.dart';
 
 // 메뉴바(Drawer) 전역 함수
-Widget menuBar (BuildContext context, {required GlobalKey<ScaffoldState> scaffoldKey}) {
-
-  // AuthService 인스턴스 생성
-  final AuthService _authService = AuthService();
+Widget gameMenuBar (BuildContext context, {required GlobalKey<ScaffoldState> scaffoldKey}) {
 
   return Drawer(
     child: Column(
@@ -25,7 +21,7 @@ Widget menuBar (BuildContext context, {required GlobalKey<ScaffoldState> scaffol
               IconButton(onPressed: (){
                 // 메뉴바 닫기 버튼
                 scaffoldKey.currentState?.closeEndDrawer();
-                }, icon: const Icon(Icons.close_sharp,
+              }, icon: const Icon(Icons.close_sharp,
                 color: Colors.white,
                 size: 32,
               ),),
@@ -58,18 +54,18 @@ Widget menuBar (BuildContext context, {required GlobalKey<ScaffoldState> scaffol
             // 공지사항 페이지 이동 코드
           },
         ),
-        // 로그아웃 타일을 맨 하단으로 위치
+        // 게임종료 타일을 맨 하단으로 위치
         Spacer(),
         ListTile(
-          trailing: const Icon(Icons.logout_outlined),
-          title: Text("로그아웃"),
-          onTap: () async {
-            _authService.logout(context);
-            Navigator.pushAndRemoveUntil(context,
-              MaterialPageRoute(builder: (context) => const LoginPage()),
-                  (Route<dynamic> route) => false,
-            );
-          }
+            trailing: const Icon(Icons.logout_outlined),
+            title: Text("게임종료"),
+            onTap: () async {
+              // 게임종료 시 유저 데이터 저장 코드 추가 필요
+              Navigator.pushAndRemoveUntil(context,
+                MaterialPageRoute(builder: (context) => const HomePage()),
+                    (Route<dynamic> route) => false,
+              );
+            }
         ),
       ],
     ),

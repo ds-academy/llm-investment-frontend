@@ -6,7 +6,8 @@ import '../component/navigator_back_button.dart';
 class StocksSelectPage extends StatefulWidget {
   const StocksSelectPage({super.key, required this.alias});
 
-  final List<String> alias; // 전달 받은 alias 데이터 저장
+  // 전달 받은 comapny alias 데이터
+  final List<String> alias;
 
   @override
   State<StocksSelectPage> createState() => _StocksSelectPageState();
@@ -16,12 +17,6 @@ class _StocksSelectPageState extends State<StocksSelectPage> {
   // 메뉴바 scaffoldKey
   final navigatorObserver = MyNavigatorObserver().scaffoldKey;
 
-  // final List<Map<String, String>> stockContents = [
-  //   {'title': '삼성 SDI1', 'subtitle': 'Samsung SDI1'},
-  //   {'title': '삼성 SDI2', 'subtitle': 'Samsung SDI2'},
-  //   {'title': '삼성 SDI3', 'subtitle': 'Samsung SDI3'}
-  // ];
-
   // 주식명 순서에 따른 알파벳
   final List<String> stockLabels = ['A', 'B', 'C'];
 
@@ -29,16 +24,20 @@ class _StocksSelectPageState extends State<StocksSelectPage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        backgroundColor: Colors.blueAccent,
         key: navigatorObserver,
         appBar: AppBar(
           backgroundColor: Colors.white,
-          foregroundColor: Colors.blue,
+          foregroundColor: Colors.blueAccent,
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                bottom: Radius.circular(20),
+              )
+          ),
           elevation: 15,
           leading: IconButton(
-            onPressed: () {
-              null;
-            },
-            icon: Image.asset('assets/chatbot_small.png'),
+            onPressed: () {null;},
+            icon: Image.asset('assets/antlab_logo_small.png'),
           ),
           actions: [
             Builder(
@@ -59,180 +58,180 @@ class _StocksSelectPageState extends State<StocksSelectPage> {
           scaffoldKey: navigatorObserver,
         ), // 메뉴바 열기
 
-        body: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          color: Colors.blueAccent,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                "Stocks\nSelect",
-                style: TextStyle(
-                  fontFamily: 'Agro',
-                  fontWeight: FontWeight.bold,
-                  fontSize: 35,
-                  height: 1,
-                  color: Colors.white,
+        body: SingleChildScrollView(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            color: Colors.transparent,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  "Stocks\nSelect",
+                  style: TextStyle(
+                    fontFamily: 'Agro',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 35,
+                    height: 1,
+                    color: Colors.white,
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              const Text(
-                "플레이를 원하는 종목을 선택해 주세요.",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+                const SizedBox(
+                  height: 15,
                 ),
-              ),
-              const SizedBox(
-                height: 25,
-              ),
-
-              Padding(
-                padding: EdgeInsets.zero, // 전체 padding을 추가할 수 있습니다
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center, // 세로 가운데 정렬
-                  children: List.generate(widget.alias.length, (index) {
-                      return Padding(
-                        // 마지막 막대에는 하단 간격을 추가하지 않음
-                        padding: EdgeInsets.only(bottom: index == 2 ? 0 : 30),
-                        child: Row(
-                          children: [
-                            const SizedBox(width: 40,), // 막대의 왼쪽 여백
-
-                            Expanded(
-                              child: Container(
-                                height: 100, // 막대의 높이
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  border: Border(
-                                    left: BorderSide(color: Colors.blueAccent.shade400, width: 3),
-                                    top: BorderSide(color: Colors.blueAccent.shade400, width: 3),
-                                    bottom: BorderSide(color: Colors.blueAccent.shade400, width: 3),
+                const Text(
+                  "플레이를 원하는 종목을 선택해 주세요.",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+          
+                Padding(
+                  padding: EdgeInsets.zero, // 전체 padding을 추가할 수 있습니다
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center, // 세로 가운데 정렬
+                    children: List.generate(widget.alias.length, (index) {
+                        return Padding(
+                          // 마지막 막대에는 하단 간격을 추가하지 않음
+                          padding: EdgeInsets.only(bottom: index == 2 ? 0 : 30),
+                          child: Row(
+                            children: [
+                              const SizedBox(width: 40,), // 막대의 왼쪽 여백
+          
+                              Expanded(
+                                child: Container(
+                                  height: 100, // 막대의 높이
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border(
+                                      left: BorderSide(color: Colors.blueAccent.shade400, width: 3),
+                                      top: BorderSide(color: Colors.blueAccent.shade400, width: 3),
+                                      bottom: BorderSide(color: Colors.blueAccent.shade400, width: 3),
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(10),
+                                      bottomLeft: Radius.circular(10),
+                                    ),
+                                    boxShadow: const [
+                                      BoxShadow(
+                                        color: Colors.white12,
+                                        offset: Offset(0, 5),
+                                        blurRadius: 5,
+                                        spreadRadius: 2,
+                                      )
+                                    ]
                                   ),
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10),
-                                  ),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: Colors.white12,
-                                      offset: Offset(0, 5),
-                                      blurRadius: 5,
-                                      spreadRadius: 2,
-                                    )
-                                  ]
-                                ),
-
-                                child: Row(
-                                  children: [
-                                    Flexible(
-                                        flex: 1,
-                                        child: Container(
-                                          color: Colors.blueAccent[400],
-                                          child: Center(
-                                            child: Text(
-                                              // 알파벳 라벨
-                                              stockLabels[index],
-                                              style: const TextStyle(
-                                                color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold
+          
+                                  child: Row(
+                                    children: [
+                                      Flexible(
+                                          flex: 1,
+                                          child: Container(
+                                            color: Colors.blueAccent[400],
+                                            child: Center(
+                                              child: Text(
+                                                // 알파벳 라벨
+                                                stockLabels[index],
+                                                style: const TextStyle(
+                                                  color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                    ),
-                                    const SizedBox(width: 5,),
-
-                                    Flexible(
-                                      flex: 4,
-                                      child: Container(
-                                        width: MediaQuery.of(context).size.width,
-                                        height: MediaQuery.of(context).size.height,
-                                        decoration: const BoxDecoration(
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            // company alias 텍스트
-                                            Text(
-                                              "  ${widget.alias[index]}", // 타이틀
-                                              style: TextStyle(
-                                                  color: Colors.blueAccent[700], fontSize: 18, fontWeight: FontWeight.bold
+                                      ),
+                                      const SizedBox(width: 5,),
+          
+                                      Flexible(
+                                        flex: 4,
+                                        child: Container(
+                                          width: MediaQuery.of(context).size.width,
+                                          height: MediaQuery.of(context).size.height,
+                                          decoration: const BoxDecoration(
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              // company alias 텍스트
+                                              Text(
+                                                "  ${widget.alias[index]}", // 타이틀
+                                                style: TextStyle(
+                                                    color: Colors.blueAccent[700], fontSize: 18, fontWeight: FontWeight.bold
+                                                ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
-
-                                    Flexible(
-                                      flex: 1,
-                                      child: IconButton(
-                                          onPressed: () {
-                                            // 각 주식별 게임 화면으로 이동
-                                            Navigator.pushAndRemoveUntil(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) => const ChartPage(),
-                                              ), (route) => false,
-                                            );
-                                          },
-                                          icon: Icon(
-                                            Icons
-                                                .keyboard_double_arrow_right_sharp,
-                                            size: 30,
-                                            color: Colors.blueAccent[700],
-                                          )),
-                                    ),
-                                  ],
+          
+                                      Flexible(
+                                        flex: 1,
+                                        child: IconButton(
+                                            onPressed: () {
+                                              // 각 주식별 게임 화면으로 이동
+                                              Navigator.pushAndRemoveUntil(context,
+                                                MaterialPageRoute(builder: (context) => const ChartPage()),
+                                                    (Route<dynamic> route) => false,
+                                              );
+                                            },
+                                            icon: Icon(
+                                              Icons
+                                                  .keyboard_double_arrow_right_sharp,
+                                              size: 30,
+                                              color: Colors.blueAccent[700],
+                                            )),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: TextButton(
-                      onPressed: () {
-                        // 주식 섹션 다시 고르게 뒤로가기
-                        Navigator.pop(context);
+                            ],
+                          ),
+                        );
                       },
-
-                      child: RichText(
-                        text: const TextSpan(
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            children: [
-                              WidgetSpan(
-                                child: Icon(
-                                  Icons.keyboard_backspace_sharp,
-                                  color: Colors.white,
-                                  size: 18,
-                                ),
-                              ),
-                              TextSpan(text: " 섹션 다시 고르기"),
-                            ]),
-                      ),
                     ),
                   ),
-                ],
-              ),
-            ],
+                ),
+          
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: TextButton(
+                        onPressed: () {
+                          // 주식 섹션 다시 고르게 뒤로가기
+                          Navigator.pop(context);
+                        },
+          
+                        child: RichText(
+                          text: const TextSpan(
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              children: [
+                                WidgetSpan(
+                                  child: Icon(
+                                    Icons.keyboard_backspace_sharp,
+                                    color: Colors.white,
+                                    size: 18,
+                                  ),
+                                ),
+                                TextSpan(text: " 섹션 다시 고르기"),
+                              ]),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
