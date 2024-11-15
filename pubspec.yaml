@@ -39,11 +39,14 @@ dependencies:
   dio: ^5.7.0
   flutter_secure_storage: ^9.2.2
   fluttertoast: ^8.2.8
+  syncfusion_flutter_charts: ^27.1.58
 
   easy_rich_text: ^2.2.0
   smooth_page_indicator: ^1.2.0+3
   carousel_slider: ^5.0.0
   google_sign_in: ^6.2.1
+  flutter_dotenv: ^5.2.1
+  auto_size_text: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -71,6 +74,7 @@ flutter:
   assets:
     - assets/
     - assets/sections/
+    - .env
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
