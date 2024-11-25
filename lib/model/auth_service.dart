@@ -1,22 +1,24 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class AuthService {
   final Dio dio = Dio();
   final FlutterSecureStorage storage = const FlutterSecureStorage();
+  final String baseUrl = dotenv.env['BASE_URL'] ?? 'http://default-url.com';
 
   // 로그인 기능
   Future<bool> login(String id, String pw, context) async {
 
-    String url = "http://10.0.2.2:3309/members/login";
+    String url = "$baseUrl/members/login";
 
     try {
       final res = await dio.post(
-        url, data: {'id': id, 'pw': pw,});
+          url, data: {'id': id, 'pw': pw,});
 
       if (res.statusCode == 200 && res.data['success']) {
-        // 로그인 성공 시 ID 값을 저장해 로그인 상태 유지
+        // 로그인 성공 시 로그인 상태 유지
         await storage.write(key: 'token', value: res.data['token']);
         return true;
       } else {
@@ -24,8 +26,8 @@ class AuthService {
         return false;
       }
     } catch (error) {
-        print("Error : $error");
-        return false;
+      print("Error : $error");
+      return false;
     }
   }
 
@@ -48,6 +50,4 @@ class AuthService {
       print("logout Error: $error");
     }
   }
-
 }
-

@@ -15,7 +15,7 @@ class GameAppBarData {
     final companyInfo = companyAliasList.isNotEmpty ? companyAliasList[0] : null;
 
     return GameAppBarData(
-      companyName: companyInfo != null ? companyInfo['COMPANY_NAME'] : 'Unknown Company',
+      companyName: companyInfo != null ? companyInfo['COMPANY_ALIAS'] : 'Unknown Company',
       currentTurn: json['current_turn'] ?? 0,
       chartTime: json['chart_time'] ?? 'N/A',
     );

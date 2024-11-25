@@ -23,6 +23,7 @@ class _GameEndFailState extends State<GameEndFail> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
@@ -33,7 +34,7 @@ class _GameEndFailState extends State<GameEndFail> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.asset("assets/text_failed.png"),
+                  Image.asset("assets/lose_text.png"),
                   const SizedBox(height: 20),
                   Image.asset(
                     "assets/game_fail.png",

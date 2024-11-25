@@ -165,5 +165,4 @@ class GameService {
       throw Exception("Error fetching news: $e");
     }
   }
-
 }

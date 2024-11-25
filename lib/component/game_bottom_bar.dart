@@ -197,13 +197,13 @@ class _GameBottomBarState extends State<GameBottomBar> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      _buildButton("매수", Colors.red[300], Colors.red, data),
+                      _buildButton("매수", Colors.red[500], Colors.red, data),
                       const SizedBox(width: 8),
-                      _buildButton("매도", Colors.blue[300], Colors.blue, data),
+                      _buildButton("매도", Colors.blue[500], Colors.blue, data),
                       const SizedBox(width: 8),
                       _buildButton(
                         "넘기기",
-                        Colors.grey[400],
+                        Colors.grey[500],
                         Colors.grey,
                         data,
                         onPressed: widget.isNextTurnEnabled ? widget.onNextDetailTurn : null,
@@ -381,11 +381,11 @@ class _GameBottomBarState extends State<GameBottomBar> {
       style: OutlinedButton.styleFrom(
         foregroundColor: Colors.white,
         backgroundColor: backgroundColor,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 8),
         minimumSize: const Size(60, 20),
         side: BorderSide(color: borderColor ?? Colors.black),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(7),
         ),
       ),
       child: Text(

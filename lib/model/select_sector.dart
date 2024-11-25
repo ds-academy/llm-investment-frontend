@@ -1,11 +1,12 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class SelectSector {
   final Dio dio = Dio();
+  final String baseUrl = dotenv.env['BASE_URL'] ?? 'http://default-url.com';
 
   Future<List<String>?> sendToSector(sector) async {
-    String url = "http://10.0.2.2:3309/members/selectstocks";
+    String url = "$baseUrl/game/selectstocks";
 
     try {
       Response res = await dio.post(

@@ -17,6 +17,7 @@ class _ChartPageState extends State<ChartPage> {
   final GameService _gameService = GameService();
   final List<String> fixedTimes = ["09:00", "11:00", "13:00", "15:00"];
   String selectedInfo = ''; // 선택된 데이터 정보를 표시할 변수
+  final double initialMoney = 100000000; // 초기 자산 1억
 
   // TooltipBehavior 인스턴스 생성
   final TooltipBehavior _tooltipBehavior = TooltipBehavior(
@@ -105,7 +106,7 @@ class _ChartPageState extends State<ChartPage> {
                       rangePadding: ChartRangePadding.additional,
                     ),
                     primaryYAxis: NumericAxis(
-                      numberFormat: NumberFormat.simpleCurrency(decimalDigits: 0),
+                      numberFormat: NumberFormat.currency(locale: 'ko', symbol: '₩', decimalDigits: 0),
                       opposedPosition: true,
                     ),
                     tooltipBehavior: _tooltipBehavior,
@@ -130,6 +131,7 @@ class _ChartPageState extends State<ChartPage> {
           SizedBox(
             height: 10,
           ),
+
           Expanded(
             flex: 1,
             child: Container(
@@ -156,7 +158,7 @@ class _ChartPageState extends State<ChartPage> {
                 future: _fetchData(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
+                    return Center(child: CircularProgressIndicator());
                   } else if (snapshot.hasError) {
                     return Center(child: Text("Error: ${snapshot.error}"));
                   } else if (!snapshot.hasData) {
@@ -164,41 +166,50 @@ class _ChartPageState extends State<ChartPage> {
                   }
 
                   final gameChartData = snapshot.data!;
-                  final dailyChartData = gameChartData.dailyChartData;
+                  final dailyMoneyData = gameChartData.dailyMoney;
 
-                  // 일별 차트 데이터 생성
-                  List<CandleData> dailyChart = List<CandleData>.generate(dailyChartData.length-1, (index) {
-                    final item = dailyChartData[index];
-                    return CandleData(
-                      time: 'Turn ${index + 1}',
-                      open: item.open,
-                      high: item.high,
-                      low: item.low,
-                      current: item.close,
-                    );
-                  });
+                  // 퍼센트 비율로 데이터 변환
+                  List<LineData> lineChartData = [
+                    // 초기값 추가
+                    LineData(turn: 0, totalMoney: 0), // 초기값: 턴 0, 자산 변화 0%
+                    ...List<LineData>.generate(dailyMoneyData.length-1, (index) {
+                      final percentChange = ((dailyMoneyData[index].totalMoney - initialMoney) / initialMoney) * 100;
+                      return LineData(
+                        turn: index + 1,
+                        totalMoney: percentChange, // % 비율로 변환
+                      );
+                    })
+                  ];
 
                   return SfCartesianChart(
-                    primaryXAxis: CategoryAxis(
-                      labelPlacement: LabelPlacement.onTicks,
-                      majorGridLines: MajorGridLines(width: 1),
-                      rangePadding: ChartRangePadding.additional,
+                    primaryXAxis: NumericAxis(
+                      interval: 1,
+                      edgeLabelPlacement: EdgeLabelPlacement.shift,
+                      axisLabelFormatter: (AxisLabelRenderDetails details) {
+                        // X축 레이블을 "Index Turn" 형식으로 변환
+                        final index = details.value.round(); // 정수로 변환
+                        return ChartAxisLabel('$index Turn', TextStyle(fontSize: 5));
+                      },
                     ),
                     primaryYAxis: NumericAxis(
-                      numberFormat: NumberFormat.simpleCurrency(decimalDigits: 0),
-                      opposedPosition: true,
+                      // minimum: -5, // Y축 최소값
+                      interval: 5,
+                      opposedPosition: true, // Y축 라벨 오른쪽 배치
+                      axisLabelFormatter: (AxisLabelRenderDetails details) {
+                        final value = details.value.toStringAsFixed(0); // 정수로 포맷
+                        return ChartAxisLabel('$value%', TextStyle(fontSize: 12));
+                      },
                     ),
-                    series: <CandleSeries<CandleData, String>>[
-                      CandleSeries<CandleData, String>(
-                        dataSource: dailyChart,
-                        xValueMapper: (CandleData data, _) => data.time,
-                        lowValueMapper: (CandleData data, _) => data.low,
-                        highValueMapper: (CandleData data, _) => data.high,
-                        openValueMapper: (CandleData data, _) => data.open,
-                        closeValueMapper: (CandleData data, _) => data.current,
-                        bearColor: Colors.blueAccent,
-                        bullColor: Colors.red,
-                      )
+                    tooltipBehavior: TooltipBehavior(enable: true),
+                    series: <LineSeries<LineData, int>>[
+                      LineSeries<LineData, int>(
+                        dataSource: lineChartData,
+                        xValueMapper: (LineData data, _) => data.turn,
+                        yValueMapper: (LineData data, _) => data.totalMoney, // 비율 사용
+                        markerSettings: MarkerSettings(isVisible: false), // 점(marker) 제거
+                        dataLabelSettings: DataLabelSettings(isVisible: false), // 차트 내 글씨 숨기기
+                        color: Colors.green, // 선 색상을 초록색으로 변경
+                      ),
                     ],
                   );
                 },
@@ -229,5 +240,17 @@ class CandleData {
   @override
   String toString() {
     return 'CandleData(time: $time, open: $open, high: $high, low: $low, current: $current)';
+  }
+}
+
+class LineData {
+  final int turn;
+  final double totalMoney;
+
+  LineData({required this.turn, required this.totalMoney});
+
+  @override
+  String toString() {
+    return 'LineData(turn: $turn, totalMoney: $totalMoney)';
   }
 }

@@ -20,7 +20,7 @@ class _SectionSelectPageState extends State<SectionSelectPage> {
 
   // 주식종목 섹션 페이지 컨트롤 (CarouselSlider, SmoothPageIndicator)
   final CarouselSliderController sectionPageController =
-      CarouselSliderController();
+  CarouselSliderController();
   int _currentIndex = 0; // 섹션 페이지 인덱스 추적
 
   // 섹션 메뉴 이미지
@@ -43,9 +43,9 @@ class _SectionSelectPageState extends State<SectionSelectPage> {
     aliasValues = (await selectSectors.sendToSector(sector))!;
     if (aliasValues.length == 3) {
       Navigator.push(context,
-          MaterialPageRoute(
-            builder: (context) => StocksSelectPage(alias: aliasValues),
-          ),
+        MaterialPageRoute(
+          builder: (context) => StocksSelectPage(alias: aliasValues),
+        ),
       );
     } else {
       print("Send to alias txt Error");
@@ -56,6 +56,7 @@ class _SectionSelectPageState extends State<SectionSelectPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Colors.blueAccent,
         key: navigatorObserver,
@@ -91,7 +92,8 @@ class _SectionSelectPageState extends State<SectionSelectPage> {
           scaffoldKey: navigatorObserver,
         ), // 메뉴바 열기
 
-        body: SingleChildScrollView(
+        body: Padding(
+          padding: const EdgeInsets.only(top: 10),
           child: Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
@@ -101,7 +103,7 @@ class _SectionSelectPageState extends State<SectionSelectPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  " Select\nSection",
+                  "Sector\nSelect",
                   style: TextStyle(
                     fontFamily: 'Agro',
                     fontWeight: FontWeight.bold,
@@ -113,21 +115,19 @@ class _SectionSelectPageState extends State<SectionSelectPage> {
                 const SizedBox(height: 15,),
 
                 const Text(
-                  "진행하고 싶은 섹션을 선택해 주세요.",
+                  "진행하고 싶은 섹터를 선택해 주세요.",
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(
-                  height: 15,
-                ),
+                const SizedBox(height: 10),
 
                 // 주식종목 목록, CarouselSlider 패키지 사용
                 CarouselSlider(
                   carouselController: sectionPageController,
                   items: sectionImgList.map(
-                    (items) {
+                        (items) {
                       return Builder(
                         builder: (BuildContext context) {
                           return Stack(
@@ -144,22 +144,22 @@ class _SectionSelectPageState extends State<SectionSelectPage> {
                               Positioned(
                                 left: 0,
                                 right: 0,
-                                bottom: 10,
-                                  // 주식 선택 페이지로 이동 버튼 영역
-                                  child: GestureDetector(
-                                    onTap: (){
-                                      // alias 텍스트 값 전송과 함께 페이지 이동
-                                      _onImageTap(context, items['sector']!);
-                                    },
-                                    child: Container(
-                                      width: 80,
-                                      height: 80,
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.transparent,
-                                      ),
+                                bottom: MediaQuery.of(context).size.height * 0.025,
+                                // 주식 선택 페이지로 이동 버튼 영역
+                                child: GestureDetector(
+                                  onTap: (){
+                                    // alias 텍스트 값 전송과 함께 페이지 이동
+                                    _onImageTap(context, items['sector']!);
+                                  },
+                                  child: Container(
+                                    width: 75,
+                                    height: 75,
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.transparent,
                                     ),
                                   ),
+                                ),
                               ),
                             ],
                           );
@@ -167,11 +167,12 @@ class _SectionSelectPageState extends State<SectionSelectPage> {
                       );
                     },
                   ).toList(),
+
                   options: CarouselOptions(
-                      height: 400,
-                      // 세로 공간 조절
-                      viewportFraction: 0.655,
+                    // 세로 공간 조절
+                      height: MediaQuery.of(context).size.height * 0.6,
                       // 가로 공간 조절
+                      viewportFraction: 0.66,
                       autoPlay: false,
                       enlargeCenterPage: true,
                       onPageChanged: (index, reason) {
@@ -180,7 +181,7 @@ class _SectionSelectPageState extends State<SectionSelectPage> {
                         });
                       }),
                 ),
-                const SizedBox(height: 15,),
+                const SizedBox(height: 10,),
 
                 Center(
                   child: SmoothPageIndicator(

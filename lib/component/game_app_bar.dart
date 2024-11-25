@@ -4,7 +4,9 @@ import '../model/game_app_bar_data.dart';
 import '../model/game_service.dart';
 
 class GameAppBar extends StatefulWidget implements PreferredSizeWidget {
-  const GameAppBar({Key? key}) : super(key: key);
+  final GlobalKey<ScaffoldState> scaffoldKey;
+
+  const GameAppBar({Key? key, required this.scaffoldKey}) : super(key: key);
 
   @override
   Size get preferredSize => const Size.fromHeight(60);
@@ -106,9 +108,11 @@ class _GameAppBarState extends State<GameAppBar> {
                       ),
                     ],
                   ),
-                  const Icon(
-                    Icons.menu,
-                    color: Colors.white,
+                  IconButton(
+                    onPressed: () {
+                      widget.scaffoldKey.currentState?.openEndDrawer();
+                    },
+                    icon: const Icon(Icons.menu, color: Colors.white),
                   ),
                 ],
               ),
