@@ -32,11 +32,16 @@ class ReadDataPopup {
                         Row(
                           children: [
                             Expanded(child: Divider(thickness: 2, color: Colors.grey)),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                              child: Text(
-                                title,
-                                style: TextStyle(fontWeight: FontWeight.bold),
+                            Flexible(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal:0),
+                                child: Text(
+                                  title,
+                                  style: const TextStyle(fontWeight: FontWeight.bold),
+                                  textAlign: TextAlign.center,
+                                  softWrap: true,
+                                  maxLines: 2,
+                                ),
                               ),
                             ),
                             Expanded(child: Divider(thickness: 2, color: Colors.grey)),

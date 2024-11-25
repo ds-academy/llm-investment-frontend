@@ -23,6 +23,7 @@ class _GameEndSuccessState extends State<GameEndSuccess> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
@@ -34,7 +35,7 @@ class _GameEndSuccessState extends State<GameEndSuccess> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset(
-                    "assets/text_success.png",
+                    "assets/win_text.png",
                     width: MediaQuery.of(context).size.width * 0.5,
                   ),
                   const SizedBox(height: 20),
